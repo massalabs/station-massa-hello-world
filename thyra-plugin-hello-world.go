@@ -1,15 +1,11 @@
 package main
 
 import (
-	"bytes"
-	"encoding/base64"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net"
-	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -17,57 +13,28 @@ import (
 	"github.com/massalabs/thyra-plugin-hello-world/api"
 	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi"
 	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi/operations"
+	"github.com/massalabs/thyra-plugin-hello-world/pkg/plugin"
 	"github.com/massalabs/thyra-plugin-hello-world/web"
 )
 
-const ThyraRegisterEndpoint = "https://my.massa/plugin-manager/register"
-
-type Register struct {
-	ID          int64
-	Name        string
-	Description string
-	Logo        string
-	Authority   string
-	APISpec     string
-}
-
-func register(pluginID int64, authority net.Addr, spec string) {
+func register(pluginID int64, socket net.Addr, spec string) {
 	logo, err := web.Content("logo_massa.webp")
 	if err != nil {
 		panic(err)
 	}
 
-	reg := Register{
-		ID:          pluginID,
-		Name:        "hello world",
-		Description: "A simple hello world plugin.",
-		Authority:   "http://" + authority.String(),
-		APISpec:     spec,
-		Logo:        base64.StdEncoding.EncodeToString(logo),
-	}
-
-	body, err := json.Marshal(reg)
+	err = plugin.Register(
+		pluginID,
+		"hello world", "massalabs",
+		"A simple hello world plugin.",
+		socket,
+		string(restapi.SwaggerJSON),
+		logo,
+	)
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("while registring plugin: %w", err))
 	}
 
-	request, err := http.NewRequest("POST", ThyraRegisterEndpoint, bytes.NewBuffer(body))
-	request.Header.Set("Content-Type", "application/json; charset=UTF-8")
-
-	client := &http.Client{}
-	response, error := client.Do(request)
-	if error != nil {
-		panic(error)
-	}
-
-	if response.StatusCode == http.StatusNoContent {
-		fmt.Fprintf(os.Stdout, "Plugin successfuly registered!\n")
-	} else {
-		body, _ := ioutil.ReadAll(response.Body)
-		fmt.Println("response Body:", string(body))
-		fmt.Fprintf(os.Stdout, "Registry failed. HTTP status: %d, HTTP body: %v.\n", response.StatusCode, body)
-		response.Body.Close()
-	}
 }
 
 func killTime(quit chan bool) {
@@ -105,6 +72,18 @@ func initializeAPI() *restapi.Server {
 }
 
 func main() {
+
+	if len(os.Args) != 2 {
+		panic("this program must be run with correlation id argument!")
+	}
+
+	firstArg := os.Args[1]
+
+	correlationID, err := strconv.ParseInt(firstArg, 10, 64)
+	if err != nil {
+		panic(err)
+	}
+
 	quit := make(chan bool)
 	intSig := make(chan os.Signal, 1)
 	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
@@ -118,7 +97,7 @@ func main() {
 		panic(err)
 	}
 
-	register(1, l.Addr(), string(restapi.SwaggerJSON))
+	register(correlationID, l.Addr(), string(restapi.SwaggerJSON))
 
 	if err := server.Serve(); err != nil {
 		panic(err)
