@@ -28,17 +28,16 @@ func register(pluginID int64, socket net.Addr, spec string) {
 		"hello world", "massalabs",
 		"A simple hello world plugin.",
 		socket,
-		string(restapi.SwaggerJSON),
+		spec,
 		logo,
 	)
 	if err != nil {
 		panic(fmt.Errorf("while registring plugin: %w", err))
 	}
-
 }
 
 func killTime(quit chan bool) {
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
 
 	fmt.Fprintf(os.Stderr, "Plugin is initializing.\n")
 
@@ -48,6 +47,7 @@ func killTime(quit chan bool) {
 			fmt.Fprintf(os.Stdout, "Tic!\n")
 		case <-quit:
 			fmt.Fprintf(os.Stderr, "Plugin is shutting down.\nBye!\n")
+
 			return
 		}
 	}
@@ -72,7 +72,7 @@ func initializeAPI() *restapi.Server {
 }
 
 func main() {
-
+	//nolint:gomnd
 	if len(os.Args) != 2 {
 		panic("this program must be run with correlation id argument!")
 	}
