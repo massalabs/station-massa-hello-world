@@ -10,11 +10,8 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
 	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi/operations"
 )
-
-//go:generate swagger generate server --target ../../server --name HelloWorld --spec ../../swagger.yml --principal interface{} --exclude-main
 
 func configureFlags(api *operations.HelloWorldAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -56,6 +53,7 @@ func configureAPI(api *operations.HelloWorldAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.Hello has not yet been implemented")
 		})
 	}
+
 	if api.WebHandler == nil {
 		api.WebHandler = operations.WebHandlerFunc(func(params operations.WebParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.Web has not yet been implemented")
