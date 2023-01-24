@@ -1,0 +1,60 @@
+name: build and upload artifacts
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
+    inputs:
+      tag_name:
+        type: string
+      draft:
+        type: string
+      prerelease:
+        type: string
+      generate_release_notes:
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+
+  lint:
+    uses: ./.github/workflows/lint.yml
+
+  tests:
+    uses: ./.github/workflows/tests.yml
+
+  build:
+    needs: [lint, tests]
+    name: build and upload artifacts
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: amd64
+            target: windows
+          - os: ubuntu-latest
+            arch: amd64
+            target: linux
+          - os: ubuntu-latest
+            arch: amd64
+            target: darwin
+          - os: ubuntu-latest
+            arch: arm64
+            target: darwin
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: installing dependencies
+        uses: ./.github/actions/install
+        with:
+          os: ${{ matrix.os }}
+      - name: Build binary for ${{ matrix.target }} on ${{ matrix.arch}}
+        run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o thyra-plugin-hello-world_${{ matrix.target }}_${{ matrix.arch }} thyra-plugin-hello-world.go
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: thyra-plugin-hello-world_${{ matrix.target }}_${{ matrix.arch }}
+          path: thyra-plugin-hello-world_${{ matrix.target }}_${{ matrix.arch }}*
