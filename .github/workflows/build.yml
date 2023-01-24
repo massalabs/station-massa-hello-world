@@ -32,30 +32,25 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            arch: amd64
+          - arch: amd64
             target: windows
-          - os: ubuntu-latest
-            arch: amd64
+            ext: .exe
+          - arch: amd64
             target: linux
-          - os: ubuntu-latest
-            arch: amd64
+          - arch: amd64
             target: darwin
-          - os: ubuntu-latest
-            arch: arm64
+          - arch: arm64
             target: darwin
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
-        env:
-          GO_VERSION: 1.19
         with:
-          go-version: ${{ env.GO_VERSION }}
-      - name: Build binary for ${{ matrix.target }} on ${{ matrix.arch}}
-        run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o thyra-plugin-hello-world_${{ matrix.target }}_${{ matrix.arch }} thyra-plugin-hello-world.go
+          go-version: ">=1.19.2"
+      - name: Build binary for ${{ matrix.target }}-${{ matrix.arch}}
+        run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o build/thyra-plugin-hello-world${{ matrix.ext }} thyra-plugin-hello-world.go
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: thyra-plugin-hello-world_${{ matrix.target }}_${{ matrix.arch }}
-          path: thyra-plugin-hello-world_${{ matrix.target }}_${{ matrix.arch }}*
+          path: build
