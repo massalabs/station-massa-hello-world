@@ -3,7 +3,6 @@ package plugin
 import (
 	"bytes"
 	"context"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -21,6 +20,7 @@ type registerBody struct {
 	Logo        string
 	URL         string
 	APISpec     string
+	Home        string
 }
 
 func Register(
@@ -28,7 +28,8 @@ func Register(
 	name string, author string,
 	shortDescription string,
 	socket net.Addr, spec string,
-	logo []byte,
+	logoURL string,
+	home string,
 ) error {
 	reg := registerBody{
 		ID:          pluginID,
@@ -37,7 +38,8 @@ func Register(
 		Description: shortDescription,
 		URL:         "http://" + socket.String(),
 		APISpec:     spec,
-		Logo:        base64.StdEncoding.EncodeToString(logo),
+		Logo:        logoURL,
+		Home:        home,
 	}
 
 	body, err := json.Marshal(reg)
