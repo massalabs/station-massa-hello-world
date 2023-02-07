@@ -17,22 +17,20 @@ import (
 	"github.com/massalabs/thyra-plugin-hello-world/web"
 )
 
-func register(pluginID int64, socket net.Addr, spec string) {
-	logo, err := web.Content("logo_massa.webp")
-	if err != nil {
-		panic(err)
-	}
+const logoFile = "logo_massa.webp"
 
-	err = plugin.Register(
+func register(pluginID int64, socket net.Addr, spec string) {
+	err := plugin.Register(
 		pluginID,
 		"hello world", "massalabs",
 		"A simple hello world plugin.",
 		socket,
 		spec,
-		logo,
+		fmt.Sprintf("web/%s", logoFile),
+		"web/",
 	)
 	if err != nil {
-		panic(fmt.Errorf("while registring plugin: %w", err))
+		panic(fmt.Errorf("while registering plugin: %w", err))
 	}
 }
 
