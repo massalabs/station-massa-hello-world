@@ -27,7 +27,6 @@ func register(pluginID int64, socket net.Addr, spec string) {
 		socket,
 		spec,
 		fmt.Sprintf("web/%s", logoFile),
-		"web/",
 	)
 	if err != nil {
 		panic(fmt.Errorf("while registering plugin: %w", err))

@@ -29,7 +29,6 @@ func Register(
 	shortDescription string,
 	socket net.Addr, spec string,
 	logoURL string,
-	home string,
 ) error {
 	reg := registerBody{
 		ID:          pluginID,
@@ -39,7 +38,7 @@ func Register(
 		URL:         "http://" + socket.String(),
 		APISpec:     spec,
 		Logo:        logoURL,
-		Home:        home,
+		Home:        "",
 	}
 
 	body, err := json.Marshal(reg)
