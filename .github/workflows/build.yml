@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TARGET_NAME: thyra-plugin-hello-world_${{ matrix.target }}-${{ matrix.arch }}
-      BIN_NAME: $TARGET_NAME${{ matrix.ext }}
+      BIN_NAME: ${{ env.TARGET_NAME }}${{ matrix.ext }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
