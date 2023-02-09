@@ -64,7 +64,14 @@ func Register(
 		body, _ := io.ReadAll(response.Body)
 		defer response.Body.Close()
 
-		return fmt.Errorf("plugin registry failed: HTTP status: %d, HTTP body: %v", response.StatusCode, body)
+		var data interface{}
+
+		err = json.Unmarshal(body, &data)
+		if err != nil {
+			data = fmt.Errorf("unable to decode json response: %w", err)
+		}
+
+		return fmt.Errorf("plugin registry failed: HTTP status: %d, HTTP body: %v", response.StatusCode, data)
 	}
 
 	return nil
