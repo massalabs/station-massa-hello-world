@@ -13,7 +13,7 @@ import (
 const ThyraRegisterEndpoint = "http://my.massa/plugin-manager/register"
 
 type registerBody struct {
-	ID          int64
+	ID          string
 	Name        string
 	Author      string
 	Description string
@@ -24,7 +24,7 @@ type registerBody struct {
 }
 
 func Register(
-	pluginID int64,
+	pluginID string,
 	name string, author string,
 	shortDescription string,
 	socket net.Addr, spec string,

@@ -5,7 +5,6 @@ import (
 	"net"
 	"os"
 	"os/signal"
-	"strconv"
 	"syscall"
 	"time"
 
@@ -19,7 +18,7 @@ import (
 
 const logoFile = "logo_massa.webp"
 
-func register(pluginID int64, socket net.Addr, spec string) {
+func register(pluginID string, socket net.Addr, spec string) {
 	err := plugin.Register(
 		pluginID,
 		"hello world", "massalabs",
@@ -74,12 +73,7 @@ func main() {
 		panic("this program must be run with correlation id argument!")
 	}
 
-	firstArg := os.Args[1]
-
-	correlationID, err := strconv.ParseInt(firstArg, 10, 64)
-	if err != nil {
-		panic(err)
-	}
+	correlationID := os.Args[1]
 
 	quit := make(chan bool)
 	intSig := make(chan os.Signal, 1)
