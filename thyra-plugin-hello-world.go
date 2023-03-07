@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"net"
 	"os"
 	"os/signal"
 	"syscall"
@@ -18,31 +17,17 @@ import (
 
 const logoFile = "logo_massa.webp"
 
-func register(pluginID string, socket net.Addr, spec string) {
-	err := plugin.Register(
-		pluginID,
-		"hello world", "massalabs",
-		"A simple hello world plugin.",
-		socket,
-		spec,
-		fmt.Sprintf("web/%s", logoFile),
-	)
-	if err != nil {
-		panic(fmt.Errorf("while registering plugin: %w", err))
-	}
-}
-
 func killTime(quit chan bool) {
 	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
 
-	fmt.Fprintf(os.Stderr, "Plugin is initializing.\n")
+	fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
 
 	for {
 		select {
 		case <-ticker.C:
 			fmt.Fprintf(os.Stdout, "Tic!\n")
 		case <-quit:
-			fmt.Fprintf(os.Stderr, "Plugin is shutting down.\nBye!\n")
+			fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n")
 
 			return
 		}
@@ -68,13 +53,6 @@ func initializeAPI() *restapi.Server {
 }
 
 func main() {
-	//nolint:gomnd
-	if len(os.Args) != 2 {
-		panic("this program must be run with correlation id argument!")
-	}
-
-	correlationID := os.Args[1]
-
 	quit := make(chan bool)
 	intSig := make(chan os.Signal, 1)
 	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
@@ -83,12 +61,19 @@ func main() {
 
 	server := initializeAPI()
 
-	l, err := server.HTTPListener()
+	listener, err := server.HTTPListener()
 	if err != nil {
 		panic(err)
 	}
 
-	register(correlationID, l.Addr(), string(restapi.SwaggerJSON))
+	PluginAuthor := "Massalabs"
+	PluginName := "hello world"
+	PluginDescription := "A simple hello world plugin."
+
+	plugin.RegisterPlugin(listener, plugin.Info{
+		Name: PluginName, Author: PluginAuthor,
+		Description: PluginDescription, APISpec: "", Logo: logoFile,
+	})
 
 	if err := server.Serve(); err != nil {
 		panic(err)

@@ -6,38 +6,63 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"net/http"
+	"os"
 )
 
 const ThyraRegisterEndpoint = "http://my.massa/plugin-manager/register"
 
-type registerBody struct {
-	ID          string
+type Info struct {
 	Name        string
 	Author      string
 	Description string
-	Logo        string
-	URL         string
 	APISpec     string
-	Home        string
+	Logo        string
 }
 
-func Register(
+type registerBody struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Author      string `json:"author"`
+	Description string `json:"description"`
+	Logo        string `json:"logo"`
+	URL         string `json:"url"`
+	APISpec     string `json:"api_spec"`
+	Home        string `json:"home"`
+}
+
+func RegisterPlugin(listener net.Listener, info Info) {
+	if os.Getenv("STANDALONE") == "1" {
+		return
+	}
+
+	minimumNumberOfCLIArgument := 2
+
+	if len(os.Args) >= minimumNumberOfCLIArgument {
+		err := register(os.Args[1], info, listener.Addr())
+		if err != nil {
+			log.Panicln(err)
+		}
+	} else {
+		panic("Usage: program must be started with a correlationID command line argument")
+	}
+}
+
+func register(
 	pluginID string,
-	name string, author string,
-	shortDescription string,
-	socket net.Addr, spec string,
-	logoURL string,
+	info Info,
+	socket net.Addr,
 ) error {
 	reg := registerBody{
 		ID:          pluginID,
-		Name:        name,
-		Author:      author,
-		Description: shortDescription,
+		Name:        info.Name,
+		Author:      info.Author,
+		Description: info.Description,
 		URL:         "http://" + socket.String(),
-		APISpec:     spec,
-		Logo:        logoURL,
+		APISpec:     info.APISpec,
+		Logo:        info.Logo,
 		Home:        "",
 	}
 
