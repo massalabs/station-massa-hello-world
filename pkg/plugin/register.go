@@ -14,7 +14,7 @@ import (
 
 const ThyraRegisterEndpoint = "http://my.massa/plugin-manager/register"
 
-const STANDALONE_ENV_VAR = "STANDALONE"
+const StandaloneEnvVar = "STANDALONE"
 
 type Info struct {
 	Name        string
@@ -36,7 +36,7 @@ type registerBody struct {
 }
 
 func RegisterPlugin(listener net.Listener, info Info) {
-	if os.Getenv(STANDALONE_ENV_VAR) == "1" {
+	if os.Getenv(StandaloneEnvVar) == "1" {
 		return
 	}
 
