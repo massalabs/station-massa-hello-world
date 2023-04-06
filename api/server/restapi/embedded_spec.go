@@ -89,7 +89,8 @@ func init() {
           "text/html",
           "text/css",
           "text/webp",
-          "image/png"
+          "image/png",
+          "image/svg+xml"
         ],
         "operationId": "web",
         "parameters": [
@@ -182,6 +183,7 @@ func init() {
         "produces": [
           "application/json",
           "image/png",
+          "image/svg+xml",
           "text/css",
           "text/html",
           "text/javascript",
