@@ -26,7 +26,6 @@ paths:
         - text/css
         - text/webp
         - image/png
-        - image/svg+xml
       parameters:
         - in: path
           name: resource
