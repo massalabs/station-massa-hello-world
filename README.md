@@ -17,7 +17,7 @@ plugin.RegisterPlugin(listener, plugin.Info{
 These commands will help you build and manually install this plugin (for development purpose only):
 
 ```shell
-    go build -o hello-world thyra-plugin-hello-world.go
-    mkdir -p ~/.config/thyra/my_plugins/hello-world
-    mv hello-world ~/.config/thyra/my_plugins/hello-world
+go build -o hello-world thyra-plugin-hello-world.go
+mkdir -p ~/.config/thyra/my_plugins/hello-world
+mv hello-world ~/.config/thyra/my_plugins/hello-world
 ```
