@@ -14,7 +14,6 @@
 //
 //	Produces:
 //	  - image/png
-//	  - image/svg+xml
 //	  - text/css
 //	  - text/html
 //	  - text/javascript
