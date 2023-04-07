@@ -15,7 +15,7 @@ import (
 	"github.com/massalabs/thyra-plugin-hello-world/web"
 )
 
-const logoFile = "hello_world.svg"
+const logoFile = "web/hello_world.svg"
 
 func killTime(quit chan bool) {
 	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd

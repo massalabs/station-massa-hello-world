@@ -99,7 +99,6 @@ type HelloWorldAPI struct {
 
 	// BinProducer registers a producer for the following mime types:
 	//   - image/png
-	//   - image/svg+xml
 	BinProducer runtime.Producer
 	// CSSProducer registers a producer for the following mime types:
 	//   - text/css
@@ -272,8 +271,6 @@ func (o *HelloWorldAPI) ProducersFor(mediaTypes []string) map[string]runtime.Pro
 		switch mt {
 		case "image/png":
 			result["image/png"] = o.BinProducer
-		case "image/svg+xml":
-			result["image/svg+xml"] = o.BinProducer
 		case "text/css":
 			result["text/css"] = o.CSSProducer
 		case "text/html":
