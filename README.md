@@ -18,6 +18,6 @@ These commands will help you build and manually install this plugin (for develop
 
 ```shell
 go build -o hello-world thyra-plugin-hello-world.go
-mkdir -p ~/.config/thyra/my_plugins/hello-world
-mv hello-world ~/.config/thyra/my_plugins/hello-world
+mkdir -p ~/.config/thyra/plugins/hello-world
+mv hello-world ~/.config/thyra/plugins/hello-world
 ```
