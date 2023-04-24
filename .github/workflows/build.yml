@@ -19,7 +19,6 @@ permissions:
   contents: write
 
 jobs:
-
   lint:
     uses: ./.github/workflows/lint.yml
 
@@ -49,6 +48,8 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ">=1.19.2"
+      - name: Prepare logo for packaging
+        run: cp web/content/hello_world.svg .
       - name: Build binary for ${{ matrix.target }}-${{ matrix.arch}}
         run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o $TARGET_NAME${{ matrix.ext }} thyra-plugin-hello-world.go
       - name: Upload artifacts
@@ -56,10 +57,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: thyra-plugin-hello-world_${{ matrix.target }}-${{ matrix.arch }}
-          path: ${{ env.TARGET_NAME }}${{ matrix.ext }}
+          path: |
+            ${{ env.TARGET_NAME }}${{ matrix.ext }}
+            manifest.json
+            hello_world.svg
       - name: Zip binary
         if: ${{ inputs.tag_name != '' }}
-        run: zip $TARGET_NAME.zip $TARGET_NAME${{ matrix.ext }}
+        run: zip $TARGET_NAME.zip $TARGET_NAME${{ matrix.ext }} manifest.json hello_world.svg
       - name: Create release and upload binaries
         if: ${{ inputs.tag_name != '' }}
         uses: softprops/action-gh-release@v1
