@@ -48,6 +48,8 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ">=1.19.2"
+      - name: Prepare logo for packaging
+        run: cp web/content/hello_world.svg .
       - name: Build binary for ${{ matrix.target }}-${{ matrix.arch}}
         run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o $TARGET_NAME${{ matrix.ext }} thyra-plugin-hello-world.go
       - name: Upload artifacts
