@@ -1,9 +1,8 @@
-name: build and upload artifacts
+name: Build and publish
+
 on:
   push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch:
   workflow_call:
     inputs:
       tag_name:
@@ -15,19 +14,8 @@ on:
       generate_release_notes:
         type: string
 
-permissions:
-  contents: write
-
 jobs:
-
-  lint:
-    uses: ./.github/workflows/lint.yml
-
-  tests:
-    uses: ./.github/workflows/tests.yml
-
   build:
-    needs: [lint, tests]
     name: build and upload artifacts
     strategy:
       matrix:
@@ -41,31 +29,41 @@ jobs:
             target: darwin
           - arch: arm64
             target: darwin
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
-      TARGET_NAME: thyra-plugin-hello-world_${{ matrix.target }}-${{ matrix.arch }}
+      TARGET_NAME: thyra-plugin-node-manager_${{ matrix.target }}-${{ matrix.arch }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
         with:
           go-version: ">=1.19.2"
-      - name: Build binary for ${{ matrix.target }}-${{ matrix.arch}}
-        run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o $TARGET_NAME${{ matrix.ext }} thyra-plugin-hello-world.go
+      - name: Build front end
+        run: ./build-frontend.sh
+      - name: Build binary
+        run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o $TARGET_NAME${{ matrix.ext }} ./cmd/node_manager_server
+      - name: Prepare logo for packaging
+        run: cp web/content/hello_world.svg .
       - name: Upload artifacts
-        if: ${{ inputs.tag_name == '' }}
+        # if: ${{ inputs.tag_name == '' && github.ref_name == 'main' }}
         uses: actions/upload-artifact@v3
         with:
-          name: thyra-plugin-hello-world_${{ matrix.target }}-${{ matrix.arch }}
-          path: ${{ env.TARGET_NAME }}${{ matrix.ext }}
+          name: thyra-plugin-node-manager_${{ matrix.target }}-${{ matrix.arch }}
+          path: |
+            ${{ env.TARGET_NAME }}${{ matrix.ext }}
+            manifest.json
+            hello_world.svg
       - name: Zip binary
-        if: ${{ inputs.tag_name != '' }}
-        run: zip $TARGET_NAME.zip $TARGET_NAME${{ matrix.ext }}
-      - name: Create release and upload binaries
-        if: ${{ inputs.tag_name != '' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ inputs.tag_name }}
-          draft: ${{ inputs.draft }}
-          prerelease: ${{ inputs.prerelease }}
-          generate_release_notes: ${{ inputs.generate_release_notes }}
-          files: "*.zip"
+        # if: ${{ inputs.tag_name != '' }}
+        run: zip $TARGET_NAME.zip $TARGET_NAME${{ matrix.ext }} manifest.json logo.svg
+      - name: Print archive hash
+        # if: ${{ inputs.tag_name != '' }}
+        run: md5sum $TARGET_NAME.zip
+      # - name: Create release and upload binaries
+      #   if: ${{ inputs.tag_name != '' }}
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     tag_name: ${{ inputs.tag_name }}
+      #     draft: ${{ inputs.draft }}
+      #     prerelease: ${{ inputs.prerelease }}
+      #     generate_release_notes: ${{ inputs.generate_release_notes }}
+      #     files: "*.zip"
