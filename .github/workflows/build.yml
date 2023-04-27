@@ -51,7 +51,11 @@ jobs:
       - name: Prepare logo for packaging
         run: cp web/content/hello_world.svg .
       - name: Build binary for ${{ matrix.target }}-${{ matrix.arch}}
-        run: GOOS=${{ matrix.target }} GOARCH=${{ matrix.arch }} go build -o $TARGET_NAME${{ matrix.ext }} thyra-plugin-hello-world.go
+        run: |
+          export GOOS=${{ matrix.target }}
+          export GOARCH=${{ matrix.arch }}
+          export CGO_ENABLED=1
+          go build -o $TARGET_NAME${{ matrix.ext }} thyra-plugin-hello-world.go
       - name: Upload artifacts
         if: ${{ inputs.tag_name == '' }}
         uses: actions/upload-artifact@v3
