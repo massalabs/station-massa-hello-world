@@ -12,9 +12,12 @@ import (
 	"os"
 )
 
-const ThyraRegisterEndpoint = "http://station.massa/plugin-manager/register"
-
-const StandaloneEnvVar = "STANDALONE"
+const (
+	MassaStationBaseURL   = "http://station.massa"
+	PluginManagerEndpoint = "plugin-manager/register"
+	ThyraRegisterEndpoint = MassaStationBaseURL + "/" + PluginManagerEndpoint
+	StandaloneEnvVar      = "STANDALONE"
+)
 
 type Info struct {
 	Name        string
