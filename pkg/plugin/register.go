@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-const ThyraRegisterEndpoint = "http://my.massa/plugin-manager/register"
+const ThyraRegisterEndpoint = "http://station.massa/plugin-manager/register"
 
 const StandaloneEnvVar = "STANDALONE"
 
