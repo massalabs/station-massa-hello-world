@@ -1,9 +1,9 @@
 {
-    "author" : "Massa Labs",
-    "name" : "Hello World",
-    "description" : "hello world plugin",
-    "logo" : "hello_world.svg",
-    "home" : "",
-    "version" : "0.0.6",
-    "apispec":""
+  "author": "Massa Labs",
+  "name": "Hello World",
+  "description": "Hello world plugin to learn by doing",
+  "logo": "hello_world.svg",
+  "home": "",
+  "version": "0.0.7",
+  "apispec": ""
 }
