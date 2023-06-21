@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi/operations"
-	"github.com/massalabs/thyra-plugin-wallet/pkg/openapi"
+	"github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
+	"github.com/massalabs/station-massa-wallet/pkg/openapi"
 )
 
 // webHandle  handles a Web request.

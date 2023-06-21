@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi/operations"
+	"github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
 )
 
 func configureFlags(api *operations.HelloWorldAPI) {

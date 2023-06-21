@@ -42,7 +42,7 @@ jobs:
             target: darwin
     runs-on: ubuntu-latest
     env:
-      TARGET_NAME: thyra-plugin-hello-world_${{ matrix.target }}-${{ matrix.arch }}
+      TARGET_NAME: station-massa-hello-world_${{ matrix.target }}-${{ matrix.arch }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
@@ -55,12 +55,12 @@ jobs:
           export GOOS=${{ matrix.target }}
           export GOARCH=${{ matrix.arch }}
           export CGO_ENABLED=1
-          go build -o $TARGET_NAME${{ matrix.ext }} thyra-plugin-hello-world.go
+          go build -o $TARGET_NAME${{ matrix.ext }} station-massa-hello-world.go
       - name: Upload artifacts
         if: ${{ inputs.tag_name == '' }}
         uses: actions/upload-artifact@v3
         with:
-          name: thyra-plugin-hello-world_${{ matrix.target }}-${{ matrix.arch }}
+          name: station-massa-hello-world_${{ matrix.target }}-${{ matrix.arch }}
           path: |
             ${{ env.TARGET_NAME }}${{ matrix.ext }}
             manifest.json

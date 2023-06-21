@@ -2,7 +2,7 @@ consumes:
   - application/json
 info:
   description: Hello world plugin API.
-  title: thyra-plugin - Hello world
+  title: station-massa - Hello world
   version: 0.0.0
 produces:
   - application/json
