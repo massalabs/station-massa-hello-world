@@ -15,7 +15,7 @@ import (
 const (
 	MassaStationBaseURL   = "http://station.massa"
 	PluginManagerEndpoint = "plugin-manager/register"
-	ThyraRegisterEndpoint = MassaStationBaseURL + "/" + PluginManagerEndpoint
+	MassaStationRegisterEndpoint = MassaStationBaseURL + "/" + PluginManagerEndpoint
 	StandaloneEnvVar      = "STANDALONE"
 )
 
@@ -76,7 +76,7 @@ func register(
 		return fmt.Errorf("while marshaling register body: %w", err)
 	}
 
-	request, err := http.NewRequestWithContext(context.Background(), http.MethodPost, ThyraRegisterEndpoint, bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(context.Background(), http.MethodPost, MassaStationRegisterEndpoint, bytes.NewBuffer(body))
 	if err != nil {
 		return fmt.Errorf("while creating register request: %w", err)
 	}

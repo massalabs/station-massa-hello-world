@@ -8,11 +8,11 @@ import (
 	"time"
 
 	"github.com/go-openapi/loads"
-	"github.com/massalabs/thyra-plugin-hello-world/api"
-	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi"
-	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi/operations"
-	"github.com/massalabs/thyra-plugin-hello-world/pkg/plugin"
-	"github.com/massalabs/thyra-plugin-hello-world/web"
+	"github.com/massalabs/station-massa-hello-world/api"
+	"github.com/massalabs/station-massa-hello-world/api/server/restapi"
+	"github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
+	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
+	"github.com/massalabs/station-massa-hello-world/web"
 )
 
 const logoFile = "web/hello_world.svg"

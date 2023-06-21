@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/massalabs/thyra-plugin-hello-world/api/server/restapi/operations"
+	"github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
 )
 
 func Hello(params operations.HelloParams) middleware.Responder {

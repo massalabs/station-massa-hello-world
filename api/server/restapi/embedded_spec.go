@@ -30,7 +30,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "Hello world plugin API.",
-    "title": "thyra-plugin - Hello world",
+    "title": "station-massa - Hello world",
     "version": "0.0.0"
   },
   "paths": {
@@ -126,7 +126,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "Hello world plugin API.",
-    "title": "thyra-plugin - Hello world",
+    "title": "station-massa - Hello world",
     "version": "0.0.0"
   },
   "paths": {
