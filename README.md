@@ -13,11 +13,3 @@ plugin.RegisterPlugin(listener, plugin.Info{
     Description: PluginDescription, APISpec: "", Logo: logoFile,
 })
 ```
-
-These commands will help you build and manually install this plugin (for development purpose only):
-
-```shell
-go build -o hello-world station-massa-hello-world.go
-mkdir -p ~/.config/massastation/plugins/hello-world
-mv hello-world ~/.config/massastation/plugins/hello-world
-```
