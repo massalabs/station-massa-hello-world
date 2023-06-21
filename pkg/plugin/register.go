@@ -13,10 +13,10 @@ import (
 )
 
 const (
-	MassaStationBaseURL   = "http://station.massa"
-	PluginManagerEndpoint = "plugin-manager/register"
+	MassaStationBaseURL          = "http://station.massa"
+	PluginManagerEndpoint        = "plugin-manager/register"
 	MassaStationRegisterEndpoint = MassaStationBaseURL + "/" + PluginManagerEndpoint
-	StandaloneEnvVar      = "STANDALONE"
+	StandaloneEnvVar             = "STANDALONE"
 )
 
 type Info struct {
