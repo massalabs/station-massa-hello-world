@@ -8,8 +8,5 @@ It contains a go package user by the other plugins to register them-self to Mass
 Here is how to use it in your plugin:
 
 ```golang
-plugin.RegisterPlugin(listener, plugin.Info{
-    Name: PluginName, Author: PluginAuthor,
-    Description: PluginDescription, APISpec: "", Logo: logoFile,
-})
+plugin.RegisterPlugin(listener)
 ```
