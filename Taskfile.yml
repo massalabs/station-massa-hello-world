@@ -1,0 +1,79 @@
+version: '3'
+
+tasks:
+  install:
+    cmds:
+      - echo "Installing dependencies"
+      - cmd: sudo apt install -y libgtk-3-dev libwebkit2gtk-4.0-dev
+        platforms: [linux]
+      - cmd: go install github.com/go-swagger/go-swagger/cmd/swagger@latest
+
+  generate: go generate ./...
+
+  test: 
+    cmds:
+      - task: clean
+      - cmd: go test -v -timeout 60s ./...
+
+  fmt:
+    cmds:
+      - cmd: go mod tidy
+      - cmd: gofumpt -w .
+      - cmd: golangci-lint run
+
+  build:
+    cmds:
+      - task: build-linux
+      - task: build-macos
+      - task: build-windows
+
+  build-linux:
+    platforms: [linux]
+    cmds:
+      - cmd: mkdir -p build/station-massa-hello-world
+      - cmd: go build -o build/station-massa-hello-world/station-massa-hello-world station-massa-hello-world.go
+
+  build-macos:
+    platforms: [darwin]
+    cmds:
+      - cmd: mkdir -p build/station-massa-hello-world
+      - cmd: go build -o build/station-massa-hello-world/station-massa-hello-world station-massa-hello-world.go
+
+  build-windows:
+    platforms: [windows]
+    cmds:
+      - cmd: mkdir build\station-massa-hello-world
+      - cmd: go build -o build\station-massa-hello-world\station-massa-hello-world.exe station-massa-hello-world.go
+
+  install-plugin:
+    cmds:
+      - task: build
+      - cmd: mkdir -p /usr/local/share/massastation/plugins/station-massa-hello-world
+        platforms: [linux, darwin]
+      - cmd: cp build/station-massa-hello-world/station-massa-hello-world /usr/local/share/massastation/plugins/station-massa-hello-world
+        platforms: [linux, darwin]
+      - cmd: cp web/content/hello_world.svg /usr/local/share/massastation/plugins/station-massa-hello-world
+        platforms: [linux, darwin]
+      - cmd: cp manifest.json /usr/local/share/massastation/plugins/station-massa-hello-world
+        platforms: [linux, darwin]
+
+  run:
+    cmds:
+      - cmd: ./build/station-massa-hello-world/station-massa-hello-world
+        platforms: [linux, darwin]
+      - cmd: ./build/station-massa-hello-world/station-massa-hello-world.exe
+        platforms: [windows]
+    env:
+      STANDALONE: 1
+
+  build-run:
+    cmds:
+      - task: build
+      - task: run
+
+  all:
+    cmds:
+      - task: install
+      - task: generate
+      - task: build
+      - task: install-plugin
