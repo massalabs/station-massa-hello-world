@@ -15,8 +15,6 @@ import (
 	"github.com/massalabs/station-massa-hello-world/web"
 )
 
-const logoFile = "web/hello_world.svg"
-
 func killTime(quit chan bool) {
 	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
 
@@ -66,14 +64,7 @@ func main() {
 		panic(err)
 	}
 
-	PluginAuthor := "Massalabs"
-	PluginName := "hello world"
-	PluginDescription := "A simple hello world plugin."
-
-	plugin.RegisterPlugin(listener, plugin.Info{
-		Name: PluginName, Author: PluginAuthor,
-		Description: PluginDescription, APISpec: "", Logo: logoFile,
-	})
+	plugin.RegisterPlugin(listener)
 
 	if err := server.Serve(); err != nil {
 		panic(err)

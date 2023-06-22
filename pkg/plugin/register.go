@@ -19,26 +19,12 @@ const (
 	StandaloneEnvVar             = "STANDALONE"
 )
 
-type Info struct {
-	Name        string
-	Author      string
-	Description string
-	APISpec     string
-	Logo        string
-}
-
 type registerBody struct {
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Author      string `json:"author"`
-	Description string `json:"description"`
-	Logo        string `json:"logo"`
-	URL         string `json:"url"`
-	APISpec     string `json:"api_spec"`
-	Home        string `json:"home"`
+	ID  string `json:"id"`
+	URL string `json:"url"`
 }
 
-func RegisterPlugin(listener net.Listener, info Info) {
+func RegisterPlugin(listener net.Listener) {
 	if os.Getenv(StandaloneEnvVar) == "1" {
 		return
 	}
@@ -46,7 +32,7 @@ func RegisterPlugin(listener net.Listener, info Info) {
 	minimumNumberOfCLIArgument := 2
 
 	if len(os.Args) >= minimumNumberOfCLIArgument {
-		err := register(os.Args[1], info, listener.Addr())
+		err := register(os.Args[1], listener.Addr())
 		if err != nil {
 			log.Panicln(err)
 		}
@@ -57,18 +43,11 @@ func RegisterPlugin(listener net.Listener, info Info) {
 
 func register(
 	pluginID string,
-	info Info,
 	socket net.Addr,
 ) error {
 	reg := registerBody{
-		ID:          pluginID,
-		Name:        info.Name,
-		Author:      info.Author,
-		Description: info.Description,
-		URL:         "http://" + socket.String(),
-		APISpec:     info.APISpec,
-		Logo:        info.Logo,
-		Home:        "",
+		ID:  pluginID,
+		URL: "http://" + socket.String(),
 	}
 
 	body, err := json.Marshal(reg)
