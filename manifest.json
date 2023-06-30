@@ -1,9 +1,9 @@
 {
-  "author": "Massa Labs",
-  "name": "Hello World",
-  "description": "Hello world plugin to learn by doing",
+  "author": "Aurelien",
+  "name": "DNS Market",
+  "description": "DNS viewer and market",
   "logo": "hello_world.svg",
   "home": "",
-  "version": "0.0.7",
+  "version": "0.0.11",
   "apispec": ""
 }

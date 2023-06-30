@@ -59,6 +59,9 @@ func NewHelloWorldAPI(spec *loads.Document) *HelloWorldAPI {
 		DefaultPageHandler: DefaultPageHandlerFunc(func(params DefaultPageParams) middleware.Responder {
 			return middleware.NotImplemented("operation DefaultPage has not yet been implemented")
 		}),
+		GoodbyeHandler: GoodbyeHandlerFunc(func(params GoodbyeParams) middleware.Responder {
+			return middleware.NotImplemented("operation Goodbye has not yet been implemented")
+		}),
 		HelloHandler: HelloHandlerFunc(func(params HelloParams) middleware.Responder {
 			return middleware.NotImplemented("operation Hello has not yet been implemented")
 		}),
@@ -118,6 +121,8 @@ type HelloWorldAPI struct {
 
 	// DefaultPageHandler sets the operation handler for the default page operation
 	DefaultPageHandler DefaultPageHandler
+	// GoodbyeHandler sets the operation handler for the goodbye operation
+	GoodbyeHandler GoodbyeHandler
 	// HelloHandler sets the operation handler for the hello operation
 	HelloHandler HelloHandler
 	// WebHandler sets the operation handler for the web operation
@@ -216,6 +221,9 @@ func (o *HelloWorldAPI) Validate() error {
 
 	if o.DefaultPageHandler == nil {
 		unregistered = append(unregistered, "DefaultPageHandler")
+	}
+	if o.GoodbyeHandler == nil {
+		unregistered = append(unregistered, "GoodbyeHandler")
 	}
 	if o.HelloHandler == nil {
 		unregistered = append(unregistered, "HelloHandler")
@@ -328,6 +336,10 @@ func (o *HelloWorldAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/api/goodbye"] = NewGoodbye(o.context, o.GoodbyeHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/api/hello"] = NewHello(o.context, o.HelloHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -374,6 +386,6 @@ func (o *HelloWorldAPI) AddMiddlewareFor(method, path string, builder middleware
 	}
 	o.Init()
 	if h, ok := o.handlers[um][path]; ok {
-		o.handlers[method][path] = builder(h)
+		o.handlers[um][path] = builder(h)
 	}
 }

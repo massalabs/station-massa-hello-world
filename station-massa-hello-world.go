@@ -44,6 +44,7 @@ func initializeAPI() *restapi.Server {
 	pluginAPI.WebHandler = operations.WebHandlerFunc(web.Handle)
 	pluginAPI.DefaultPageHandler = operations.DefaultPageHandlerFunc(web.DefaultRedirectHandler)
 	pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
+	pluginAPI.GoodbyeHandler = operations.GoodbyeHandlerFunc(api.Goodbye)
 
 	server.ConfigureAPI()
 

@@ -44,6 +44,43 @@ func init() {
         }
       }
     },
+    "/api/goodbye": {
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "goodbye",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "the name of the person to be greeted.",
+            "name": "name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Goodbye content.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "message"
+              ],
+              "properties": {
+                "message": {
+                  "description": "Goodbye message.",
+                  "type": "string",
+                  "x-nullable": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server has encountered a situation it does not know how to handle."
+          }
+        }
+      }
+    },
     "/api/hello": {
       "put": {
         "produces": [
@@ -136,6 +173,43 @@ func init() {
         "responses": {
           "301": {
             "description": "Move to the default endpoint"
+          }
+        }
+      }
+    },
+    "/api/goodbye": {
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "goodbye",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "the name of the person to be greeted.",
+            "name": "name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Goodbye content.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "message"
+              ],
+              "properties": {
+                "message": {
+                  "description": "Goodbye message.",
+                  "type": "string",
+                  "x-nullable": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server has encountered a situation it does not know how to handle."
           }
         }
       }

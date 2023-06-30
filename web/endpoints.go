@@ -4,19 +4,29 @@ import (
 	"mime"
 	"net/http"
 	"path/filepath"
+	"embed"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
 	"github.com/massalabs/station-massa-wallet/pkg/openapi"
 )
 
-// webHandle  handles a Web request.
+const basePath = "content/dist/"
+
+//go:embed content
+var contentWebApp embed.FS
+
+// Handle a Web request.
 func Handle(params operations.WebParams) middleware.Responder {
 	resourceName := params.Resource
 
-	resourceContent, err := Content(resourceName)
+	resourceContent, err := contentWebApp.ReadFile(basePath + resourceName)
 	if err != nil {
-		return operations.NewWebNotFound()
+		resourceName = "index.html"
+		resourceContent, err = contentWebApp.ReadFile(basePath + resourceName)
+		if err != nil {
+			return operations.NewWebNotFound()
+		}
 	}
 
 	fileExtension := filepath.Ext(resourceName)
@@ -30,5 +40,5 @@ func Handle(params operations.WebParams) middleware.Responder {
 
 // defaultRedirectHandler redirects request to "/" URL to "web/index.html".
 func DefaultRedirectHandler(_ operations.DefaultPageParams) middleware.Responder {
-	return openapi.NewCustomResponder(nil, map[string]string{"Location": "web/index.html"}, http.StatusPermanentRedirect)
+	return openapi.NewCustomResponder(nil, map[string]string{"Location": "web/index"}, http.StatusPermanentRedirect)
 }

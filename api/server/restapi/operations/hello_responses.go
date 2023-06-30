@@ -14,8 +14,7 @@ import (
 // HelloOKCode is the HTTP code returned for type HelloOK
 const HelloOKCode int = 200
 
-/*
-HelloOK Greeting content.
+/*HelloOK Greeting content.
 
 swagger:response helloOK
 */
@@ -59,8 +58,7 @@ func (o *HelloOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produce
 // HelloInternalServerErrorCode is the HTTP code returned for type HelloInternalServerError
 const HelloInternalServerErrorCode int = 500
 
-/*
-HelloInternalServerError Internal Server Error - The server has encountered a situation it does not know how to handle.
+/*HelloInternalServerError Internal Server Error - The server has encountered a situation it does not know how to handle.
 
 swagger:response helloInternalServerError
 */

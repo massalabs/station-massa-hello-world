@@ -34,10 +34,10 @@ func NewHello(ctx *middleware.Context, handler HelloHandler) *Hello {
 	return &Hello{Context: ctx, Handler: handler}
 }
 
-/*
-	Hello swagger:route PUT /api/hello hello
+/* Hello swagger:route PUT /api/hello hello
 
 Hello hello API
+
 */
 type Hello struct {
 	Context *middleware.Context

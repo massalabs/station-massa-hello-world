@@ -29,10 +29,10 @@ func NewDefaultPage(ctx *middleware.Context, handler DefaultPageHandler) *Defaul
 	return &DefaultPage{Context: ctx, Handler: handler}
 }
 
-/*
-	DefaultPage swagger:route GET / defaultPage
+/* DefaultPage swagger:route GET / defaultPage
 
 DefaultPage default page API
+
 */
 type DefaultPage struct {
 	Context *middleware.Context

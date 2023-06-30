@@ -2,23 +2,23 @@
 
 // Package restapi station-massa - Hello world
 //
-//	Hello world plugin API.
-//	Schemes:
-//	  http
-//	Host: localhost
-//	BasePath: /
-//	Version: 0.0.0
+//  Hello world plugin API.
+//  Schemes:
+//    http
+//  Host: localhost
+//  BasePath: /
+//  Version: 0.0.0
 //
-//	Consumes:
-//	  - application/json
+//  Consumes:
+//    - application/json
 //
-//	Produces:
-//	  - image/png
-//	  - text/css
-//	  - text/html
-//	  - text/javascript
-//	  - application/json
-//	  - text/webp
+//  Produces:
+//    - image/png
+//    - text/css
+//    - text/html
+//    - text/javascript
+//    - application/json
+//    - text/webp
 //
 // swagger:meta
 package restapi

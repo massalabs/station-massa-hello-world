@@ -61,3 +61,27 @@ paths:
                 x-nullable: false
         "500":
           description: Internal Server Error - The server has encountered a situation it does not know how to handle.
+  /api/goodbye:
+    put:
+      operationId: goodbye
+      parameters:
+        - in: query
+          name: name
+          type: string
+          description: the name of the person to be greeted.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Goodbye content.
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                description: Goodbye message.
+                type: string
+                x-nullable: false
+        "500":
+          description: Internal Server Error - The server has encountered a situation it does not know how to handle.

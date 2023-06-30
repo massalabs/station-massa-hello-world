@@ -14,8 +14,7 @@ import (
 // DefaultPageMovedPermanentlyCode is the HTTP code returned for type DefaultPageMovedPermanently
 const DefaultPageMovedPermanentlyCode int = 301
 
-/*
-DefaultPageMovedPermanently Move to the default endpoint
+/*DefaultPageMovedPermanently Move to the default endpoint
 
 swagger:response defaultPageMovedPermanently
 */

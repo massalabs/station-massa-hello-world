@@ -17,3 +17,14 @@ func Hello(params operations.HelloParams) middleware.Responder {
 		&operations.HelloOKBody{Message: fmt.Sprintf("Hello, %s!", target)},
 	)
 }
+
+func Goodbye(params operations.GoodbyeParams) middleware.Responder {
+	target := "World"
+	if params.Name != nil {
+		target = *params.Name
+	}
+
+	return operations.NewGoodbyeOK().WithPayload(
+		&operations.GoodbyeOKBody{Message: fmt.Sprintf("Goodbye, %s!", target)},
+	)
+}
