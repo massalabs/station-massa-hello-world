@@ -12,13 +12,13 @@ tasks:
 
   test: 
     cmds:
-      - task: clean
       - cmd: go test -v -timeout 60s ./...
 
   fmt:
     cmds:
       - cmd: go mod tidy
-      - cmd: gofumpt -w .
+      - cmd: gofumpt -l -w .
+      - cmd: gci write .
       - cmd: golangci-lint run
 
   build:
@@ -42,8 +42,8 @@ tasks:
   build-windows:
     platforms: [windows]
     cmds:
-      - cmd: mkdir build\station-massa-hello-world
-      - cmd: go build -o build\station-massa-hello-world\station-massa-hello-world.exe station-massa-hello-world.go
+      - cmd: mkdir -p build/station-massa-hello-world
+      - cmd: go build -o build/station-massa-hello-world/station-massa-hello-world.exe station-massa-hello-world.go
 
   install-plugin:
     cmds:
