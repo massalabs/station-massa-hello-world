@@ -64,7 +64,10 @@ func main() {
 		panic(err)
 	}
 
-	plugin.RegisterPlugin(listener)
+	err = plugin.RegisterPlugin(listener)
+	if err != nil {
+		panic(err)
+	}
 
 	if err := server.Serve(); err != nil {
 		panic(err)
