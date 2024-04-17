@@ -1,6 +1,6 @@
 module github.com/massalabs/station-massa-hello-world
 
-go 1.19
+go 1.20
 
 require (
 	github.com/go-openapi/errors v0.20.2
