@@ -33,14 +33,18 @@ jobs:
         include:
           - arch: amd64
             target: windows
+            runs-on: ubuntu-latest
             ext: .exe
           - arch: amd64
             target: linux
+            runs-on: ubuntu-latest
           - arch: amd64
             target: darwin
+            runs-on: macos-latest
           - arch: arm64
             target: darwin
-    runs-on: ubuntu-latest
+            runs-on: macos-latest
+    runs-on: ${{ matrix.runs-on }}
     env:
       TARGET_NAME: station-massa-hello-world_${{ matrix.target }}-${{ matrix.arch }}
     steps:

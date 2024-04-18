@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net"
 	"net/http"
 	"os"
@@ -24,9 +23,9 @@ type registerBody struct {
 	URL string `json:"url"`
 }
 
-func RegisterPlugin(listener net.Listener) {
+func RegisterPlugin(listener net.Listener) error {
 	if os.Getenv(StandaloneEnvVar) == "1" {
-		return
+		return nil
 	}
 
 	minimumNumberOfCLIArgument := 2
@@ -34,11 +33,13 @@ func RegisterPlugin(listener net.Listener) {
 	if len(os.Args) >= minimumNumberOfCLIArgument {
 		err := register(os.Args[1], listener.Addr())
 		if err != nil {
-			log.Panicln(err)
+			return err
 		}
 	} else {
 		panic("Usage: program must be started with a correlationID command line argument")
 	}
+
+	return nil
 }
 
 func register(
