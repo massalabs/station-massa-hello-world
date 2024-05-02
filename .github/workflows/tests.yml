@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
         env:
-          GO_VERSION: 1.19
+          GO_VERSION: 1.21
         with:
           go-version: ${{ env.GO_VERSION }}
       - run: go test ./... -coverprofile=coverage.coverprofile
