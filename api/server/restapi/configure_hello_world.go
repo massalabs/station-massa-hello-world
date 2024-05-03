@@ -13,7 +13,7 @@ import (
 	"github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
 )
 
-func configureFlags(api *operations.HelloWorldAPI) {
+func configureFlags(_ *operations.HelloWorldAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
 
@@ -76,7 +76,7 @@ func configureTLS(_ *tls.Config) {
 // If you need to modify a config, store server instance to stop it individually later, this is the place.
 // This function can be called multiple times, depending on the number of serving schemes.
 // scheme value will be set accordingly: "http", "https" or "unix".
-func configureServer(_ *http.Server, scheme, addr string) {
+func configureServer(_ *http.Server, _, _ string) {
 }
 
 // The middleware configuration is for the handler executors. These do not apply to the swagger.json document.

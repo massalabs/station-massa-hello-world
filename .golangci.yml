@@ -16,6 +16,7 @@ linters:
     - goerr113 # we should decide first on how we would like to handle error internally
     - ireturn
     - exhaustruct
+    - depguard
 
   presets:
     - bugs
