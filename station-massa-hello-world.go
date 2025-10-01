@@ -63,7 +63,7 @@ func main() {
 
 	server := initializeAPI()
 
-	if os.Getenv(StandaloneEnvVar) != "1" {
+	if os.Getenv(StandaloneEnvVar) != "1" { // plugin registration is skipped in standalone mode
 		listener, err := server.HTTPListener()
 		if err != nil {
 			panic(err)
