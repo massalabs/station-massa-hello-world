@@ -11,8 +11,12 @@ import (
 	"github.com/massalabs/station-massa-hello-world/api"
 	"github.com/massalabs/station-massa-hello-world/api/server/restapi"
 	"github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
-	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
 	"github.com/massalabs/station-massa-hello-world/web"
+	pluginKit "github.com/massalabs/station/plugin-kit"
+)
+
+const (
+	StandaloneEnvVar = "STANDALONE"
 )
 
 func killTime(quit chan bool) {
@@ -59,14 +63,16 @@ func main() {
 
 	server := initializeAPI()
 
-	listener, err := server.HTTPListener()
-	if err != nil {
-		panic(err)
-	}
+	if os.Getenv(StandaloneEnvVar) != "1" {
+		listener, err := server.HTTPListener()
+		if err != nil {
+			panic(err)
+		}
 
-	err = plugin.RegisterPlugin(listener)
-	if err != nil {
-		panic(err)
+		err = pluginKit.RegisterPlugin(listener) // register plugin to Massa Station
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	if err := server.Serve(); err != nil {
