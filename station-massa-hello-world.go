@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -22,14 +23,23 @@ const (
 func killTime(quit chan bool) {
 	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
 
-	fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
+	_, err := fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
+	if err != nil {
+		panic(err)
+	}
 
 	for {
 		select {
 		case <-ticker.C:
-			fmt.Fprintf(os.Stdout, "Tic!\n")
+			_, err := fmt.Fprintf(os.Stdout, "Tic!\n")
+			if err != nil {
+				log.Println(err)
+			}
 		case <-quit:
-			fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n")
+			_, err := fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n")
+			if err != nil {
+				log.Println(err)
+			}
 
 			return
 		}
