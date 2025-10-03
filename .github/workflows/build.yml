@@ -62,7 +62,7 @@ jobs:
           go build -o $TARGET_NAME${{ matrix.ext }} station-massa-hello-world.go
       - name: Upload artifacts
         if: ${{ inputs.tag_name == '' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: station-massa-hello-world_${{ matrix.target }}-${{ matrix.arch }}
           path: |

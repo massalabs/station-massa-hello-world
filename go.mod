@@ -1,6 +1,6 @@
 module github.com/massalabs/station-massa-hello-world
 
-go 1.21
+go 1.24.6
 
 require (
 	github.com/go-openapi/errors v0.20.2
@@ -12,6 +12,7 @@ require (
 	github.com/go-openapi/validate v0.22.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/massalabs/station-massa-wallet v0.1.2
+	github.com/massalabs/station/plugin-kit v0.1.1
 	golang.org/x/net v0.7.0
 )
 

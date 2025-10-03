@@ -98,6 +98,8 @@ github.com/markbates/oncer v0.0.0-20181203154359-bf2de49a0be2/go.mod h1:Ld9puTsI
 github.com/markbates/safe v1.0.1/go.mod h1:nAqgmRi7cY2nqMc92/bSEeQA+R4OheNU2T1kNSCBdG0=
 github.com/massalabs/station-massa-wallet v0.1.2 h1:vjdltcdEYQ1OeUR7lY0CL57azr2ssHZcgzHLT/Gg2ww=
 github.com/massalabs/station-massa-wallet v0.1.2/go.mod h1:pXtu0HqZgvGcKQPo3QiM7s7oEBBZz5MdI0Wni3k8KW8=
+github.com/massalabs/station/plugin-kit v0.1.1 h1:KIzEjQX1ukgSSmmnD3EVADN9N7h3kTbFzHI3lal9+Po=
+github.com/massalabs/station/plugin-kit v0.1.1/go.mod h1:ua8P3mEso/AJSyuAL1cqy4JRu7tn/zzSEZsW3FJLIew=
 github.com/mitchellh/mapstructure v1.3.3/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
 github.com/mitchellh/mapstructure v1.4.1/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
 github.com/mitchellh/mapstructure v1.5.0 h1:jeMsZIYE/09sWLaz43PL7Gy6RuMjD2eJVyuac5Z2hdY=
